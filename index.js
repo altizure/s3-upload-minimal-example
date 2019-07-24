@@ -93,9 +93,9 @@ const main = async () => {
         console.log('start to upload', f)
         const filebuffer = fs.readFileSync(path.resolve(folder, f))
         const checksum = sha1sum(filebuffer)
-        const { url, image } = await uploadImageS3({pid, filename: f, bucket, checksum})
+        const { url, image } = await uploadImageS3({pid, filename: f, bucket, checksum, type: 'JPEG'})
         const { state } = await startImageUpload(image.id)
-        const res = await put({ url, file: filebuffer })
+        const res = await put({ url, file: filebuffer, htmltype: 'image/jpeg' })
         if (res.status === 200)  {
           console.log('upload done', f)
         } else {
